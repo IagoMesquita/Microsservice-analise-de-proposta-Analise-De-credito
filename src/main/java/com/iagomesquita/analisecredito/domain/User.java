@@ -1,4 +1,4 @@
-package com.iagomesquita.analisecretito.domain;
+package com.iagomesquita.analisecredito.domain;
 
 import lombok.Getter;
 import lombok.Setter;

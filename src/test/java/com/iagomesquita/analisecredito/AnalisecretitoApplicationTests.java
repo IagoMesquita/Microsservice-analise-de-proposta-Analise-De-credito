@@ -1,4 +1,4 @@
-package com.iagomesquita.analisecretito;
+package com.iagomesquita.analisecredito;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
