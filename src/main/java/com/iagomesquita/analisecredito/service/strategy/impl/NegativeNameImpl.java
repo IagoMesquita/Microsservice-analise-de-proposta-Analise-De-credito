@@ -1,6 +1,7 @@
 package com.iagomesquita.analisecredito.service.strategy.impl;
 
 import com.iagomesquita.analisecredito.domain.Proposal;
+import com.iagomesquita.analisecredito.exceptions.StrategyException;
 import com.iagomesquita.analisecredito.service.strategy.PointsCalculation;
 import java.util.Random;
 import org.springframework.core.annotation.Order;
@@ -13,7 +14,7 @@ public class NegativeNameImpl implements PointsCalculation {
   @Override
   public int calculate(Proposal proposal) {
     if (isNegativeName()) {
-      throw new RuntimeException("Nome negativo");
+      throw new StrategyException("Nome negativo");
     }
 
     return 100;

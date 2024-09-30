@@ -1,6 +1,7 @@
 package com.iagomesquita.analisecredito.service.strategy.impl;
 
 import com.iagomesquita.analisecredito.domain.Proposal;
+import com.iagomesquita.analisecredito.exceptions.StrategyException;
 import com.iagomesquita.analisecredito.service.strategy.PointsCalculation;
 import java.util.Random;
 import org.springframework.core.annotation.Order;
@@ -15,7 +16,7 @@ public class ScoreImpl implements PointsCalculation {
     int score = score();
 
     if (score <= 200) {
-      throw new RuntimeException("Score baixo");
+      throw new StrategyException("Score baixo");
     } else if (score <= 400) {
       return 150;
     } else {
