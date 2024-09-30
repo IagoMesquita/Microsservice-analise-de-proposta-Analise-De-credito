@@ -1,7 +1,9 @@
 package com.iagomesquita.analisecredito.service;
 
+import com.iagomesquita.analisecredito.domain.Proposal;
 import com.iagomesquita.analisecredito.service.strategy.PointsCalculation;
 import java.util.List;
+import java.util.Properties;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +15,11 @@ public class CreditAnalysisService {
     this.pointsCalculations = pointsCalculation;
   }
 
-  public void toAnalyze() {}
+  public void toAnalyze(Proposal proposal) {
+    int score = pointsCalculations.stream()
+        .mapToInt(impl -> impl.calculate(proposal))
+        .sum();
+  }
 
 }
 
