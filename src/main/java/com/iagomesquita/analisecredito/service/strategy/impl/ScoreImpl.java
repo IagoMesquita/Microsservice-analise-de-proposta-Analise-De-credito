@@ -1,5 +1,6 @@
 package com.iagomesquita.analisecredito.service.strategy.impl;
 
+import com.iagomesquita.analisecredito.constants.MessageConstant;
 import com.iagomesquita.analisecredito.domain.Proposal;
 import com.iagomesquita.analisecredito.exceptions.StrategyException;
 import com.iagomesquita.analisecredito.service.strategy.PointsCalculation;
@@ -15,8 +16,9 @@ public class ScoreImpl implements PointsCalculation {
   public int calculate(Proposal proposal) {
     int score = score();
 
-    if (score <= 200) {
-      throw new StrategyException("Score baixo");
+    if (score < 200) {
+      throw new StrategyException(
+          String.format(MessageConstant.LOW_SERASA_SCORE, proposal.getUsuario().getNome()));
     } else if (score <= 400) {
       return 150;
     } else {

@@ -1,5 +1,6 @@
 package com.iagomesquita.analisecredito.service.strategy.impl;
 
+import com.iagomesquita.analisecredito.constants.MessageConstant;
 import com.iagomesquita.analisecredito.domain.Proposal;
 import com.iagomesquita.analisecredito.exceptions.StrategyException;
 import com.iagomesquita.analisecredito.service.strategy.PointsCalculation;
@@ -14,7 +15,8 @@ public class NegativeNameImpl implements PointsCalculation {
   @Override
   public int calculate(Proposal proposal) {
     if (isNegativeName()) {
-      throw new StrategyException("Nome negativo");
+      throw new StrategyException(
+          String.format(MessageConstant.NEGATIVE_CUSTUMER, proposal.getUsuario().getNome()));
     }
 
     return 100;
