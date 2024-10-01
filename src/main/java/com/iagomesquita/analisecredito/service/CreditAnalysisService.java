@@ -4,14 +4,18 @@ import com.iagomesquita.analisecredito.domain.Proposal;
 import com.iagomesquita.analisecredito.exceptions.StrategyException;
 import com.iagomesquita.analisecredito.service.strategy.PointsCalculation;
 import java.util.List;
-import java.util.Properties;
-import java.util.stream.Stream;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreditAnalysisService {
 
-  private List<PointsCalculation> pointsCalculations;
+  private final List<PointsCalculation> pointsCalculations;
+
+  private NotificationRabbitService notificationRabbitService;
+
+  @Value("${rabbitmq.exchange.proposalcompleted}")
+  private String exchangeProposalCompleted;
 
   public CreditAnalysisService(List<PointsCalculation> pointsCalculation) {
     this.pointsCalculations = pointsCalculation;
@@ -27,11 +31,15 @@ public class CreditAnalysisService {
      boolean isApproved = score > MINIMUM_SCORE;
 
      proposal.setAprovada(isApproved);
+
    } catch (StrategyException exception) {
 
      proposal.setAprovada(false);
+     proposal.setObservacao(exception.getMessage());
 
    }
+
+   notificationRabbitService.notify(exchangeProposalCompleted, proposal);
   }
 
 }
